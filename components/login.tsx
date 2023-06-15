@@ -9,6 +9,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
     });
+
     if (error) {
       console.log(error);
     }
@@ -16,6 +17,7 @@ export default function Login() {
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
+
     if (error) {
       console.log(error);
     }
