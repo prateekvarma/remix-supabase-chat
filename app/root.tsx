@@ -44,7 +44,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export default function App() {
   const { env, session } = useLoaderData<typeof loader>();
-  const revalidator = useRevalidator();
+  const { revalidate }  = useRevalidator();
 
   const [supabase] = useState(() =>
     createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
@@ -58,14 +58,14 @@ export default function App() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.access_token !== serverAccessToken) {
         //client data is not in sync anymore, call loaders now
-        revalidator.revalidate();
+        revalidate();
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase, serverAccessToken, revalidator]);
+  }, [supabase, serverAccessToken, revalidate]);
 
   return (
     <html lang='en'>
