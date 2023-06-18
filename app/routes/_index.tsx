@@ -4,6 +4,7 @@ import createServerSupabase from 'utils/supabase.server';
 
 import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import Login from 'components/login';
+import RealtimeMessages from 'components/realtime-messages';
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -38,7 +39,7 @@ export default function Index() {
   return (
     <>
       <Login />
-      <pre>{JSON.stringify(messages, null, 2)}</pre>
+      <RealtimeMessages serverMessages={messages} />
       <Form method='post'>
         <input type='text' name='message' />
         <button type='submit'>Send</button>
